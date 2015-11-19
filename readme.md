@@ -1,6 +1,6 @@
 # pmap
 
-A `PMap` has the same API surface as an es'15 `Map`, except keys are arrays describing paths into a logical tree structure.
+A `PMap` has the same API surface as an ES6 `Map`, except keys are arrays describing paths into a logical tree structure.
 Here are some examples.
 
 ```js
@@ -49,6 +49,7 @@ for (const entry of map) {
   console.log(entry);
 }
 
+// [[], null]
 // [['a'], 9]
 // [['a', 'x'], 3]
 ```
