@@ -1,6 +1,6 @@
 # pmap
 
-A `PMap` has the same API surface as an ES6 `Map`, except keys are arrays describing paths into a logical tree structure.
+A `PMap` (AKA path map) has the same API surface as an ES6 `Map`, except keys are arrays describing paths into a logical tree structure.
 Here are some examples.
 
 ```js
