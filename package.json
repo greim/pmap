@@ -1,0 +1,32 @@
+{
+  "name": "pmap",
+  "version": "1.0.0",
+  "description": "Like ES6 Map but with paths instead of keys",
+  "main": "lib/pmap.js",
+  "scripts": {
+    "prepublish": "npm run compile",
+    "test": "mocha --compilers js:babel/register",
+    "compile": "babel src --out-dir lib --optional runtime"
+  },
+  "keywords": [
+    "es6",
+    "es2015",
+    "map",
+    "path"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:greim/pmap.git"
+  },
+  "author": "Greg Reimer <gregreimer@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^4.1.4",
+    "eslint": "^1.9.0",
+    "mocha": "^2.3.3",
+    "babel": "^5.6.14"
+  },
+  "dependencies": {
+    "babel-runtime": "^5.7.0"
+  }
+}
