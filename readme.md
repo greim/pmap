@@ -53,6 +53,12 @@ for (const entry of map) {
 // [['a', 'x'], 3]
 ```
 
+# npm
+
+```
+npm install pmap
+```
+
 # API documentation
 
 See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
