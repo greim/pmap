@@ -1,6 +1,6 @@
 # pmap
 
-A `PMap` (AKA path map) has the same API surface as an ES6 `Map`, except keys are arrays describing paths into a logical tree structure.
+A `PMap` (AKA path map) has the same API surface as an ES6 `Map`, except keys are arrays (or iterables) describing paths into a logical tree structure.
 Here are some examples.
 
 ```js
@@ -19,7 +19,7 @@ console.log(map.has(['a','b','c'])); // true
 console.log(map.has(['a','b'])); // false
 console.log(map.get(['a','b','c'])); // 2
 
-map.set(['a','x'], 3);
+map.set('ax', 3); // strings can be paths since they're iterable
 
 // . (empty)
 // └--a (empty)
@@ -56,6 +56,21 @@ for (const entry of map) {
 // [[], null]
 // [['a'], 9]
 // [['a', 'x'], 3]
+
+// trie-like operations also supported via find()
+map.clear();
+map.set('my dog');
+map.set('my dog has fleas');
+map.set('my doug');
+map.set('my doge');
+map.set('my cat');
+for (const [path] of map.find('my dog')) {
+  console.log(path.join(''));
+}
+
+// 'my dog'
+// 'my dog has fleas'
+// 'my doge'
 ```
 
 # npm
@@ -68,4 +83,8 @@ npm install pmap
 
 See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
-Caveat: differs from maps since keys are paths!
+Caveats and notes:
+
+ * Differs from maps since keys are paths!
+ * Also, the path can be any iterable, so `['a','b','c']` and `'abc'` are both valid path keys.
+ * Note that unlike ES6 maps, iteration order isn't guaranteed.

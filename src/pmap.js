@@ -18,6 +18,9 @@ export default class PMap {
   }
 
   set(path, value, idx = 0) {
+    if (!Array.isArray(path)) {
+      path = [...path];
+    }
     const len = path.length - idx;
     const _ = privates.get(this);
     if (len === 0) {
@@ -39,12 +42,18 @@ export default class PMap {
   }
 
   delete(path) {
+    if (!Array.isArray(path)) {
+      path = [...path];
+    }
     const retVal = deleteFromPMap(this, path);
     prune(this);
     return retVal;
   }
 
   get(path, idx = 0) {
+    if (!Array.isArray(path)) {
+      path = [...path];
+    }
     const _ = privates.get(this);
     const len = path.length - idx;
     if (len === 0) {
@@ -81,6 +90,9 @@ export default class PMap {
   }
 
   has(path, idx = 0) {
+    if (!Array.isArray(path)) {
+      path = [...path];
+    }
     const len = path.length - idx;
     const _ = privates.get(this);
     if (len === 0) {
@@ -94,6 +106,25 @@ export default class PMap {
         return false;
       } else {
         return child.has(path, idx + 1);
+      }
+    }
+  }
+
+  *find(path, idx = 0) {
+    if (!Array.isArray(path)) {
+      path = [...path];
+    }
+    const len = path.length - idx;
+    const _ = privates.get(this);
+    if (len === 0) {
+      for (const [p, value] of this) {
+        yield [ path.concat(p), value ];
+      }
+    } else if (_.children) {
+      const step = path[idx];
+      const child = _.children.get(step);
+      if (child) {
+        yield* child.find(path, idx + 1);
       }
     }
   }

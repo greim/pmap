@@ -210,13 +210,12 @@ describe('pmap', () => {
 
   it('should iterate values', () => {
     const m = new PMap();
-    m.set([], 0);
-    m.set([1,2], 3);
-    const res = [];
-    for (const value of m.values()) {
-      res.push(value);
-    }
-    assert.deepEqual(res, [0,3]);
+    m.set('a', 0);
+    m.set('abc', 2);
+    m.set('ab', 4);
+    m.set('abcdefg', 6);
+    const res = [...m.values()];
+    assert.deepEqual(res, [0,4,2,6]);
   });
 
   it('should construct on entries', () => {
@@ -284,5 +283,42 @@ describe('pmap', () => {
       [[1,2], 3]
     ]);
     assert.strictEqual(m.size, 2);
+  });
+
+  it('should set with iterables', () => {
+    const m = new PMap();
+    m.set('1234');
+    assert(m.has(['1','2','3','4']));
+  });
+
+  it('should has with iterables', () => {
+    const m = new PMap();
+    m.set('1234');
+    assert(m.has('1234'));
+  });
+
+  it('should get with iterables', () => {
+    const m = new PMap();
+    m.set('1234', 2);
+    assert.strictEqual(m.get('1234'), 2);
+  });
+
+  it('should delete with iterables', () => {
+    const m = new PMap();
+    m.set('1234');
+    m.delete('1234');
+    assert(!m.has('1234'));
+  });
+
+  it('should find', () => {
+    const m = new PMap();
+    m.set('my dog has fleas');
+    m.set('my dog has fur');
+    m.set('my doge');
+    m.set('my dog');
+    m.set('my do');
+    m.set('my cat');
+    const results = [...m.find('my dog')].map(r => r[0].join(''));
+    assert.deepEqual(results, ['my dog','my dog has fleas','my dog has fur','my doge']);
   });
 });
