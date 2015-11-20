@@ -15,6 +15,10 @@ map.set(['a','b','c'], 2);
 //    └--b (empty)
 //       └--c (2)
 
+console.log(map.has(['a','b','c'])); // true
+console.log(map.has(['a','b'])); // false
+console.log(map.get(['a','b','c'])); // 2
+
 map.set(['a','x'], 3);
 
 // . (empty)
