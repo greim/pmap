@@ -86,5 +86,6 @@ See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Obj
 Caveats and notes:
 
  * Differs from maps since keys are paths!
- * Also, the path can be any iterable, so `['a','b','c']` and `'abc'` are both valid path keys.
+ * Also, the path can be any iterable, so `['a','b','c']` and `'abc'` are both identical path keys.
+ * There's a `find()` method which ES6 maps don't have.
  * Note that unlike ES6 maps, iteration order isn't guaranteed.
