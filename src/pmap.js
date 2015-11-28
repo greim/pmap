@@ -17,115 +17,105 @@ export default class PMap {
     }
   }
 
-  set(path, value, idx = 0) {
-    if (!Array.isArray(path)) {
-      path = [...path];
-    }
-    const len = path.length - idx;
-    const _ = privates.get(this);
-    if (len === 0) {
-      _.value = value;
-      _.hasValue = true;
-    } else {
+  set(path, value) {
+    let _ = privates.get(this);
+    for (const step of path) {
       if (!_.children) {
         _.children = new Map();
       }
-      const step = path[idx];
       let child = _.children.get(step);
       if (!child) {
         child = new PMap();
         _.children.set(step, child);
       }
-      child.set(path, value, idx + 1);
+      _ = privates.get(child);
     }
-    return this;
+    _.value = value;
+    _.hasValue = true;
   }
 
   delete(path) {
-    if (!Array.isArray(path)) {
-      path = [...path];
+    let _ = privates.get(this);
+    for (const step of path) {
+      if (!_.children) {
+        return false;
+      }
+      let child = _.children.get(step);
+      if (!child) {
+        return false;
+      }
+      _ = privates.get(child);
     }
-    const retVal = deleteFromPMap(this, path);
-    prune(this);
-    return retVal;
+    if (_.hasValue) {
+      delete _.value;
+      _.hasValue = false;
+      prune(this);
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  get(path, idx = 0) {
-    if (!Array.isArray(path)) {
-      path = [...path];
-    }
-    const _ = privates.get(this);
-    const len = path.length - idx;
-    if (len === 0) {
-      return _.value;
-    } else if (!_.children) {
-      return undefined;
-    } else {
-      const step = path[idx];
-      const child = _.children.get(step);
+  get(path) {
+    let _ = privates.get(this);
+    for (const step of path) {
+      if (!_.children) {
+        return undefined;
+      }
+      let child = _.children.get(step);
       if (!child) {
         return undefined;
-      } else {
-        return child.get(path, idx + 1);
       }
+      _ = privates.get(child);
     }
+    return _.value;
   }
 
   get size() {
-    const _ = privates.get(this);
-    let size = _.hasValue ? 1 : 0;
-    if (_.children) {
-      for (let child of _.children.values()) {
-        size += child.size;
-      }
+    let size = 0;
+    for (const value of this.values()) {
+      size++;
     }
     return size;
   }
 
   clear() {
     const _ = privates.get(this);
-    _.value = undefined;
+    delete _.value;
+    delete _.children;
     _.hasValue = false;
-    _.children = undefined;
   }
 
-  has(path, idx = 0) {
-    if (!Array.isArray(path)) {
-      path = [...path];
-    }
-    const len = path.length - idx;
-    const _ = privates.get(this);
-    if (len === 0) {
-      return !!_.hasValue;
-    } else if (!_.children) {
-      return false;
-    } else {
-      const step = path[idx];
-      const child = _.children.get(step);
+  has(path) {
+    let _ = privates.get(this);
+    for (const step of path) {
+      if (!_.children) {
+        return false;
+      }
+      let child = _.children.get(step);
       if (!child) {
         return false;
-      } else {
-        return child.has(path, idx + 1);
       }
+      _ = privates.get(child);
     }
+    return !!_.hasValue;
   }
 
-  *find(path, idx = 0) {
-    if (!Array.isArray(path)) {
-      path = [...path];
+  *find(path) {
+    let _ = privates.get(this);
+    let child = this;
+    for (const step of path) {
+      if (!_.children) {
+        return;
+      }
+      child = _.children.get(step);
+      if (!child) {
+        return;
+      }
+      _ = privates.get(child);
     }
-    const len = path.length - idx;
-    const _ = privates.get(this);
-    if (len === 0) {
-      for (const [p, value] of this) {
-        yield [ path.concat(p), value ];
-      }
-    } else if (_.children) {
-      const step = path[idx];
-      const child = _.children.get(step);
-      if (child) {
-        yield* child.find(path, idx + 1);
-      }
+    for (const [p, value] of child) {
+      yield [[...path].concat(p), value ];
     }
   }
 
@@ -152,31 +142,11 @@ export default class PMap {
   }
 }
 
-function deleteFromPMap(pmap, path, idx = 0) {
-  const len = path.length - idx;
-  const _ = privates.get(pmap);
-  let retVal = false;
-  if (len === 0) {
-    if (_.hasValue) {
-      retVal = true;
-      _.value = undefined;
-      _.hasValue = false;
-    }
-  } else if (_.children) {
-    const step = path[idx];
-    const child = _.children.get(step);
-    if (child) {
-      retVal = deleteFromPMap(child, path, idx + 1);
-    }
-  }
-  return retVal;
-}
-
 function* iterate(pmap, which, path = []) {
   const _ = privates.get(pmap);
   if (_.hasValue) {
     if (which === 'entries') {
-      yield [ path, _.value ];
+      yield [ path.slice(), _.value ];
     } else if (which === 'keys') {
       yield path;
     } else if (which === 'values') {
