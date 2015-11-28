@@ -1,12 +1,17 @@
-# pmap
+# Path Maps!
 
-A `PMap` (AKA path map) has the same API surface as an ES6 `Map`, except keys are arrays (or iterables) describing paths into a logical tree structure.
+```bash
+npm install pmap
+```
+
+A path map has the same API surface as an ES6 `Map`, except keys are arrays (or iterables) describing *paths*.
+Internally, a [trie data structure](https://en.wikipedia.org/wiki/Trie) is used to store entries.
 Here are some examples.
 
 ```js
-import PMap from 'pmap';
+import PathMap from 'pmap';
 
-const map = new PMap();
+const map = new PathMap();
 
 map.set(['a','b','c'], 2);
 
@@ -19,7 +24,8 @@ console.log(map.has(['a','b','c'])); // true
 console.log(map.has(['a','b'])); // false
 console.log(map.get(['a','b','c'])); // 2
 
-map.set('ax', 3); // strings can be paths since they're iterable
+map.set('ax', 3); // any iterable can be a path
+                  // identical to map.set(['a', 'x'], 3)
 
 // . (empty)
 // └--a (empty)
@@ -43,21 +49,14 @@ map.set([], null);
 //    |  └--c (2)
 //    └--x (3)
 
-map.delete(['a','b','c']);
+map.delete('abc');
 
 // . (null)
 // └--a (9)
 //    └--x (3)
 
-for (const entry of map) {
-  console.log(entry);
-}
-
-// [[], null]
-// [['a'], 9]
-// [['a', 'x'], 3]
-
-// trie-like operations also supported via find()
+// there's also a find() method
+// which ES6 `Map` doesn't have
 map.clear();
 map.set('my dog');
 map.set('my dog has fleas');
@@ -73,19 +72,10 @@ for (const [path] of map.find('my dog')) {
 // 'my doge'
 ```
 
-# npm
-
-```
-npm install pmap
-```
-
 # API documentation
 
 See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
 Caveats and notes:
 
- * Differs from maps since keys are paths!
- * Also, the path can be any iterable, so `['a','b','c']` and `'abc'` are both identical path keys.
- * There's a `find()` method which ES6 maps don't have.
- * Note that unlike ES6 maps, iteration order isn't guaranteed.
+ * Unlike ES6 maps, iteration order isn't guaranteed.

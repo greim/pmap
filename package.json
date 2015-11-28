@@ -1,6 +1,6 @@
 {
   "name": "pmap",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Like ES6 Map but with paths instead of keys",
   "main": "lib/pmap.js",
   "scripts": {

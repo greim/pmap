@@ -148,7 +148,7 @@ function* iterate(pmap, which, path = []) {
     if (which === 'entries') {
       yield [ path.slice(), _.value ];
     } else if (which === 'keys') {
-      yield path;
+      yield path.slice();
     } else if (which === 'values') {
       yield _.value;
     }
