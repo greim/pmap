@@ -173,7 +173,7 @@ function prune(pmap) {
       }
     }
     if (_.children.size === 0) {
-      _.children = undefined;
+      delete _.children;
     }
   }
 }
