@@ -1,6 +1,6 @@
 {
   "name": "pmap",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Like ES6 Map but with paths instead of keys",
   "main": "lib/pmap.js",
   "scripts": {
@@ -12,7 +12,10 @@
     "es6",
     "es2015",
     "map",
-    "path"
+    "path",
+    "trie",
+    "prefix tree",
+    "tree"
   ],
   "repository": {
     "type": "git",
