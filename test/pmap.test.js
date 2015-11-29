@@ -8,90 +8,90 @@
 import assert from 'assert';
 import PMap from '../src/pmap';
 
-describe('pmap', () => {
+describe('sorting helpers', () => {
 
-  describe('sorting helpers', () => {
-
-    it('sortVals should sort ("a", "a")', () => {
-      assert.strictEqual(sortVals('a', 'a'), 0);
-    });
-
-    it('sortVals should sort ("a", "b")', () => {
-      assert.strictEqual(sortVals('a', 'b'), -1);
-    });
-
-    it('sortVals should sort ("b", "a")', () => {
-      assert.strictEqual(sortVals('b', 'a'), 1);
-    });
-
-    it('sortVals should sort (0, 0)', () => {
-      assert.strictEqual(sortVals(0, 0), 0);
-    });
-
-    it('sortVals should sort (0, 1)', () => {
-      assert.strictEqual(sortVals(0, 1), -1);
-    });
-
-    it('sortVals should sort (1, 0)', () => {
-      assert.strictEqual(sortVals(1, 0), 1);
-    });
-
-    it('sortVals should sort (null, 1)', () => {
-      assert.strictEqual(sortVals(null, 1), -1);
-    });
-
-    it('sortVals should sort (1, null)', () => {
-      assert.strictEqual(sortVals(1, null), 1);
-    });
-
-    it('sortVals should sort (undefined, 0)', () => {
-      assert.strictEqual(sortVals(undefined, 0), -1);
-    });
-
-    it('sortVals should sort (0, undefined)', () => {
-      assert.strictEqual(sortVals(0, undefined), 1);
-    });
-
-    it('sortVals should sort (null, undefined)', () => {
-      assert.strictEqual(sortVals(null, undefined), 1);
-    });
-
-    it('sortVals should sort (null, undefined)', () => {
-      assert.strictEqual(sortVals(null, undefined), 1);
-    });
-
-    it('sortPaths should sort ([0], [0])', () => {
-      assert.strictEqual(sortPaths([0], [0]), 0);
-    });
-
-    it('sortPaths should sort ([0], [1])', () => {
-      assert.strictEqual(sortPaths([0], [1]), -1);
-    });
-
-    it('sortPaths should sort ([1], [0])', () => {
-      assert.strictEqual(sortPaths([1], [0]), 1);
-    });
-
-    it('sortPaths should sort ([0, 1], [0])', () => {
-      assert.strictEqual(sortPaths([0, 1], [0]), 1);
-    });
-
-    it('sortPaths should sort ([0], [0, 1])', () => {
-      assert.strictEqual(sortPaths([0], [0, 1]), -1);
-    });
-
-    it('sortPaths should sort ([0, 1], [0, 1])', () => {
-      assert.strictEqual(sortPaths([0, 1], [0, 1]), 0);
-    });
-
-    it('sortPaths should sort ([0, 1], [0, 2])', () => {
-      assert.strictEqual(sortPaths([0, 1], [0, 2]), -1);
-    });
-
-    it('sortEntries should sort ([[0, 1]], [[0, 2]])', () => {
-      assert.strictEqual(sortEntries([[0, 1]], [[0, 2]]), -1);
-    });
+  it('sortVals should sort ("a", "a")', () => {
+    assert.strictEqual(sortVals('a', 'a'), 0);
   });
+
+  it('sortVals should sort ("a", "b")', () => {
+    assert.strictEqual(sortVals('a', 'b'), -1);
+  });
+
+  it('sortVals should sort ("b", "a")', () => {
+    assert.strictEqual(sortVals('b', 'a'), 1);
+  });
+
+  it('sortVals should sort (0, 0)', () => {
+    assert.strictEqual(sortVals(0, 0), 0);
+  });
+
+  it('sortVals should sort (0, 1)', () => {
+    assert.strictEqual(sortVals(0, 1), -1);
+  });
+
+  it('sortVals should sort (1, 0)', () => {
+    assert.strictEqual(sortVals(1, 0), 1);
+  });
+
+  it('sortVals should sort (null, 1)', () => {
+    assert.strictEqual(sortVals(null, 1), -1);
+  });
+
+  it('sortVals should sort (1, null)', () => {
+    assert.strictEqual(sortVals(1, null), 1);
+  });
+
+  it('sortVals should sort (undefined, 0)', () => {
+    assert.strictEqual(sortVals(undefined, 0), -1);
+  });
+
+  it('sortVals should sort (0, undefined)', () => {
+    assert.strictEqual(sortVals(0, undefined), 1);
+  });
+
+  it('sortVals should sort (null, undefined)', () => {
+    assert.strictEqual(sortVals(null, undefined), 1);
+  });
+
+  it('sortVals should sort (null, undefined)', () => {
+    assert.strictEqual(sortVals(null, undefined), 1);
+  });
+
+  it('sortPaths should sort ([0], [0])', () => {
+    assert.strictEqual(sortPaths([0], [0]), 0);
+  });
+
+  it('sortPaths should sort ([0], [1])', () => {
+    assert.strictEqual(sortPaths([0], [1]), -1);
+  });
+
+  it('sortPaths should sort ([1], [0])', () => {
+    assert.strictEqual(sortPaths([1], [0]), 1);
+  });
+
+  it('sortPaths should sort ([0, 1], [0])', () => {
+    assert.strictEqual(sortPaths([0, 1], [0]), 1);
+  });
+
+  it('sortPaths should sort ([0], [0, 1])', () => {
+    assert.strictEqual(sortPaths([0], [0, 1]), -1);
+  });
+
+  it('sortPaths should sort ([0, 1], [0, 1])', () => {
+    assert.strictEqual(sortPaths([0, 1], [0, 1]), 0);
+  });
+
+  it('sortPaths should sort ([0, 1], [0, 2])', () => {
+    assert.strictEqual(sortPaths([0, 1], [0, 2]), -1);
+  });
+
+  it('sortEntries should sort ([[0, 1]], [[0, 2]])', () => {
+    assert.strictEqual(sortEntries([[0, 1]], [[0, 2]]), -1);
+  });
+});
+
+describe('pmap', () => {
 
   it('should construct blank', () => {
     new PMap();
