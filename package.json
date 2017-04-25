@@ -1,6 +1,6 @@
 {
   "name": "pmap",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "description": "Trie-based ES6 Map clone: keys=iterables, values=anything",
   "main": "lib/pmap.js",
   "scripts": {

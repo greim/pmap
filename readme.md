@@ -76,6 +76,7 @@ for (const [path] of map.find('my dog')) {
 
 See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
-Caveats and notes:
+Caveats, change logs and notes:
 
  * Unlike ES6 maps, iteration order isn't guaranteed.
+ * 1.x => 2.0 major version bump due to having removed es6 module syntax. No other changes.
