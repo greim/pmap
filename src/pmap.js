@@ -5,7 +5,7 @@
 
 const privates = new WeakMap();
 
-export default class PMap {
+module.exports = class PMap {
 
   constructor(entries) {
     const _ = {};
@@ -73,7 +73,7 @@ export default class PMap {
 
   get size() {
     let size = 0;
-    for (const value of this.values()) {
+    for (const value of this.values()) { // eslint-disable-line no-unused-vars
       size++;
     }
     return size;
@@ -140,7 +140,7 @@ export default class PMap {
       cb.call(ctx, value, path, this);
     }
   }
-}
+};
 
 function* iterate(pmap, which, path = []) {
   const _ = privates.get(pmap);

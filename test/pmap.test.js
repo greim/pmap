@@ -5,8 +5,8 @@
 
 /* eslint-env mocha */
 
-import assert from 'assert';
-import PMap from '../src/pmap';
+const assert = require('assert');
+const PMap = require('../src/pmap');
 
 describe('sorting helpers', () => {
 
